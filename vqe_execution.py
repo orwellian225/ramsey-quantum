@@ -17,7 +17,7 @@ import qiskit.circuit.library as qkl
 np.set_printoptions(linewidth=300)
 data_csv_path = "./raw_data/vqe_execution_results.csv"
 
-graph_order = 1
+graph_order = 6
 clique_order, iset_order = 2, 2
 num_trials = 1
 if len(sys.argv) == 5:
@@ -27,7 +27,7 @@ if len(sys.argv) == 5:
 
 edge_length = graph_order * (graph_order - 1) // 2
 
-simulator = StatevectorSimulator(device="GPU")
+simulator = StatevectorSimulator()
 estimator = Estimator()
 
 print(f"Computing R({clique_order},{iset_order}) ?= {graph_order}")
@@ -49,11 +49,11 @@ data_csv = open(data_csv_path, "a+")
 
 print(f"{"":-<80}")
 for trial_i in range(num_trials):
-    print(f"\rExecuting trial {trial_i + 1}", end="")
+    print(f"Executing trial {trial_i + 1}", end="\n")
     ansatz = qkl.EfficientSU2(edge_length)
+
     vqe = qka.VQE(estimator, ansatz, optimizer=spsa)
     npe = qka.NumPyMinimumEigensolver()
-    initial_point = np.random.random(ansatz.num_parameters)
 
     result = vqe.compute_minimum_eigenvalue(operator=problem_hamiltonian)
     numpy_result = npe.compute_minimum_eigenvalue(operator=problem_hamiltonian)
