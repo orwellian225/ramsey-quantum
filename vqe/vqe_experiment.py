@@ -22,6 +22,15 @@ ansatz = qkl.EfficientSU2(length)
 initial_point = np.random.random(ansatz.num_parameters)
 spsa = qka.optimizers.SPSA(maxiter=300)
 
+decomposed_ansatz = ansatz.decompose()
+decomposed_ansatz.draw("mpl", filename=f"./visualizations/raw_circuit_VQE.pdf")
+
+ansatz.draw("mpl", filename=f"./visualizations/circuit_VQE.pdf", style={
+    "backgroundcolor": '#1b1b1b',
+    "textcolor": "white",
+    "linecolor": "white"
+})
+
 vqe = qka.VQE(estimator, ansatz, optimizer=spsa)
 result = vqe.compute_minimum_eigenvalue(operator=problem_hamiltonian)
 
@@ -35,5 +44,5 @@ print("VQE Min Energy:", result.eigenvalue)
 print(f"Likely VQE Min Energy state: |{bin(np.argmax(optimal_state.data))[2:]}> with probability {np.max(optimal_state.data)**2}")
 print("VQE Min Energy state probabilites:")
 for i, x in enumerate(optimal_state.data):
-    print(f"\tP(|{bin(i)[2:]}>) = {x**2}")
+    print(f"\tP(|{bin(i)[2:]}>) = {x.real**2 + x.imag**2}")
 
