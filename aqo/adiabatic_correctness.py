@@ -8,7 +8,7 @@ import math as m
 from adiabatic_optimisation import AdiabaticOptimisationProblem
 import qiskit as qk
 import qiskit_algorithms as qka
-from qiskit_aer import StatevectorSimulator
+from qiskit_aer import AerSimulator
 from qiskit_aer.primitives import EstimatorV2
 
 n_values = [4, 5, 6, 3, 4, 4, 5]
@@ -21,7 +21,7 @@ T = 3
 delta = 0.1
 steps = int(T / delta)
 
-sim = StatevectorSimulator()
+sim = AerSimulator()
 estimator = EstimatorV2()
 
 print("Expected Energy Values:")
