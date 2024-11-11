@@ -11,7 +11,7 @@ from qiskit_aer import AerSimulator
 from qiskit_aer.primitives import EstimatorV2
 
 num_experiments = 7
-num_trials = 1
+num_trials = 5
 
 n_values = [4, 5, 6, 3, 4, 4, 5]
 k_values = [3, 3, 3, 2, 2, 2, 2]

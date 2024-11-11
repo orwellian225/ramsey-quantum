@@ -7,7 +7,7 @@ import qiskit_ibm_runtime.fake_provider as qkrf
 import qiskit_algorithms as qka
 import qiskit.circuit.library as qkl
 from qiskit_aer import AerSimulator
-from qiskit_aer.primitives import Sampler
+from qiskit_aer.primitives import SamplerV2
 
 num_experiments = 5 * 3 
 
@@ -21,7 +21,7 @@ if not noise:
 else:
     backend = qkrf.FakeBrisbane()
     sim = AerSimulator.from_backend(backend)
-sampler = Sampler(run_options={'shots': 1000})
+sampler = SamplerV2(run_options={'shots': 1000})
 
 
 spsa = qka.optimizers.SPSA(maxiter=300)
